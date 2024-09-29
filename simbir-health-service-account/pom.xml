@@ -6,11 +6,19 @@
 
     <artifactId>simbir-health-service-account</artifactId>
     <version>1.0</version>
+    <packaging>jar</packaging>
 
     <parent>
         <groupId>su.zhenya.me</groupId>
         <artifactId>simbir-health-service-parent</artifactId>
         <version>1.0</version>
     </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>su.zhenya.me</groupId>
+            <artifactId>simbir-health-service-account-security</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

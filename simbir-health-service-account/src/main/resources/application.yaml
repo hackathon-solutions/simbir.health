@@ -1,0 +1,7 @@
+server:
+  port: ${ACCOUNT_SERVICE_PORT}
+spring:
+  datasource:
+    username: ${ACCOUNT_POSTGRES_DB_USERNAME:postgres}
+    password: ${ACCOUNT_POSTGRES_DB_PASSWORD:postgres}
+    url: jdbc:postgresql://${ACCOUNT_POSTGRES_DB_HOSTNAME__:localhost}:${ACCOUNT_POSTGRES_DB_PORT}/${ACCOUNT_POSTGRES_DB_NAME}

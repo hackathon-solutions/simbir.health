@@ -1,0 +1,10 @@
+services:
+  account-postgres-db:
+    image: postgres:15.7
+    hostname: ${ACCOUNT_POSTGRES_DB_HOSTNAME}
+    environment:
+      POSTGRES_USER: ${ACCOUNT_POSTGRES_DB_USERNAME}
+      POSTGRES_PASSWORD: ${ACCOUNT_POSTGRES_DB_PASSWORD}
+      POSTGRES_DB: ${ACCOUNT_POSTGRES_DB_NAME}
+    ports:
+      - ${ACCOUNT_POSTGRES_DB_PORT}:5432
