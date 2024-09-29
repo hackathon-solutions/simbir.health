@@ -5,3 +5,30 @@ spring:
     username: ${ACCOUNT_POSTGRES_DB_USERNAME:postgres}
     password: ${ACCOUNT_POSTGRES_DB_PASSWORD:postgres}
     url: jdbc:postgresql://${ACCOUNT_POSTGRES_DB_HOSTNAME__:localhost}:${ACCOUNT_POSTGRES_DB_PORT}/${ACCOUNT_POSTGRES_DB_NAME}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+service:
+  account:
+    secret: ${ACCOUNT_SERVICE_SECRET}
+    api:
+      controllers:
+        - path: "/Authentication"
+          endpoints:
+            account-sign-up: "/SignUp"
+            account-sign-in: "/SignIn"
+            token-ban: "/SignOut"
+            token-validate: "/Validate"
+            token-refresh: "/Refresh"
+        - path: "/Accounts"
+          endpoints:
+            account-get-current: "/Me"
+            account-patch-current: "/Update"
+            account-get-all: "/"
+            account-create: "/"
+            account-patch-by-id: "/{accountId}"
+            account-delete-by-id: "/{accountId}"
+        - path: "/Doctors"
+          endpoints:
+            doctors-get-all: "/"
+            doctors-get-by-id: "/{accountId}"

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Account {
 
+    private long accountId;
     private String firstName;
     private String lastName;
     private String username;
