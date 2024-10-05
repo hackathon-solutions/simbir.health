@@ -13,22 +13,25 @@ service:
     secret: ${ACCOUNT_SERVICE_SECRET}
     api:
       controllers:
-        - path: "/Authentication"
+        authentication:
+          path: "/Authentication"
           endpoints:
             account-sign-up: "/SignUp"
             account-sign-in: "/SignIn"
             token-ban: "/SignOut"
             token-validate: "/Validate"
             token-refresh: "/Refresh"
-        - path: "/Accounts"
+        account:
+          path: "/Accounts"
           endpoints:
             account-get-current: "/Me"
             account-patch-current: "/Update"
             account-get-all: "/"
             account-create: "/"
-            account-patch-by-id: "/{accountId}"
+            account-put-by-id: "/{accountId}"
             account-delete-by-id: "/{accountId}"
-        - path: "/Doctors"
+        doctor:
+          path: "/Doctors"
           endpoints:
             doctors-get-all: "/"
             doctors-get-by-id: "/{accountId}"

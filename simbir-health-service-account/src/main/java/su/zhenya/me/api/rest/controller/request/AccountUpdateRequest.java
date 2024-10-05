@@ -1,17 +1,18 @@
-package su.zhenya.me.account.model;
+package su.zhenya.me.api.rest.controller.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import su.zhenya.me.account.model.AccountCredentials;
+import su.zhenya.me.account.model.Role;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Account {
+public class AccountUpdateRequest {
 
-    private AccountId accountId;
     private String firstName;
     private String lastName;
     private AccountCredentials credentials;
-    private Role role = Role.USER;
+    private Role role;
 }

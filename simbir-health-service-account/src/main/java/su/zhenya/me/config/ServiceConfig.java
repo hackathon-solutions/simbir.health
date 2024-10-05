@@ -2,7 +2,6 @@ package su.zhenya.me.config;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Map;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -21,9 +20,8 @@ public class ServiceConfig {
     @Data
     public static class Api {
 
-        // TODO: придумать че нибудь нормальное сюда, чтобы контроллеры вытаскивались по имени, а не по индексу
         @NotNull
-        private List<Controller> controllers;
+        private Map<String, Controller> controllers;
     }
 
     @Data
