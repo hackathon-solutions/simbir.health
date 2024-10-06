@@ -1,11 +1,12 @@
-package su.zhenya.me.api.rest.controller.response;
+package su.zhenya.me.api.rest.response;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import su.zhenya.me.account.model.AccountId;
 import su.zhenya.me.account.model.Role;
-import su.zhenya.me.api.rest.controller.dto.AccountCredentialsDto;
+import su.zhenya.me.api.rest.dto.AccountCredentialsDto;
 
 @Data
 @NoArgsConstructor
@@ -16,5 +17,5 @@ public class AccountResponse {
     private String firstName;
     private String lastName;
     private AccountCredentialsDto credentials;
-    private Role accountRole;
+    private List<Role> accountRoles;
 }

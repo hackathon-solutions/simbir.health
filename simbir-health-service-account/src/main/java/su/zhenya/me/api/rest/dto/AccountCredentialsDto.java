@@ -1,4 +1,4 @@
-package su.zhenya.me.api.rest.controller.dto;
+package su.zhenya.me.api.rest.dto;
 
 import lombok.Data;
 

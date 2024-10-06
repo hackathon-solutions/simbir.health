@@ -7,10 +7,11 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+// TODO: вынести в общий модуль
 @Data
 @Component
 @ConfigurationProperties(prefix = "service.account")
-public class ServiceConfig {
+public class ServiceConfiguration {
 
     @NotEmpty
     private String secret;

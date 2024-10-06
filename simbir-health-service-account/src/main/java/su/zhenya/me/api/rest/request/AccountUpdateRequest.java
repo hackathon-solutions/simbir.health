@@ -1,5 +1,6 @@
-package su.zhenya.me.api.rest.controller.request;
+package su.zhenya.me.api.rest.request;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +15,5 @@ public class AccountUpdateRequest {
     private String firstName;
     private String lastName;
     private AccountCredentials credentials;
-    private Role role;
+    private List<Role> roles;
 }

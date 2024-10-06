@@ -1,4 +1,4 @@
-package su.zhenya.me.api.rest.controller.header;
+package su.zhenya.me.api.rest.header;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

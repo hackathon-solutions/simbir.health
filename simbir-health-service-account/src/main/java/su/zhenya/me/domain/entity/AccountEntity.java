@@ -8,11 +8,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 import su.zhenya.me.account.model.AccountId;
 import su.zhenya.me.account.model.Role;
 import su.zhenya.me.domain.entity.converter.AccountIdConverter;
+import su.zhenya.me.domain.entity.converter.RoleListToStringConverter;
 import su.zhenya.me.domain.entity.type.AccountIdType;
 
 @Data
@@ -30,5 +32,6 @@ public class AccountEntity {
     @PrimaryKeyJoinColumn
     @OneToOne(mappedBy = "account")
     private AccountCredentialsEntity credentials;
-    private Role accountRole = Role.USER;
+    @Convert(converter = RoleListToStringConverter.class)
+    private List<Role> accountRoles = List.of(Role.USER);
 }

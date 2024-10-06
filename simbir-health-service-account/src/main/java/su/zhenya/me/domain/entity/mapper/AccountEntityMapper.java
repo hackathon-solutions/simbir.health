@@ -8,8 +8,8 @@ import su.zhenya.me.domain.entity.AccountEntity;
 @Mapper
 public interface AccountEntityMapper {
 
-    @Mapping(target = "role", source = "accountRole")
+    @Mapping(target = "roles", source = "accountRoles")
     Account entityToDomain(AccountEntity account);
-    @Mapping(target = "accountRole", source = "role", conditionExpression = "java(account.getRole() != null)")
+    @Mapping(target = "accountRoles", source = "roles", conditionExpression = "java(account.getRoles() != null && !account.getRoles().isEmpty())")
     AccountEntity domainToEntity(Account account);
 }
