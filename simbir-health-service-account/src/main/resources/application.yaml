@@ -8,9 +8,15 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+authentication:
+  server:
+    token-release-path: "http://localhost:8085/Authentication/SignIn"
+    token-verify-path: ""
+    token-suspend-path: ""
 service:
-  account:
+  authentication:
     secret: ${ACCOUNT_SERVICE_SECRET}
+  account:
     api:
       controllers:
         authentication:

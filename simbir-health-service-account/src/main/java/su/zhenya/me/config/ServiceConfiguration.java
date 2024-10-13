@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "service.account")
 public class ServiceConfiguration {
 
-    @NotEmpty
-    private String secret;
     @NotNull
     private Api api;
 
