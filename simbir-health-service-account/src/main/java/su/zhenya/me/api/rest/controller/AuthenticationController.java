@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import su.zhenya.me.account.model.AccountId;
 import su.zhenya.me.account.model.AccountToken;
@@ -38,8 +39,8 @@ public class AuthenticationController {
     }
 
     @GetMapping("${service.account.api.controllers.authentication.endpoints.token-validate}")
-    public void tokenValidate(AccountToken accountToken) {
-        authenticationService.verifyToken(accountToken);
+    public boolean tokenValidate(@RequestParam String accessToken) {
+        return authenticationService.verifyToken(accessToken);
     }
 
     @PostMapping("${service.account.api.controllers.authentication.endpoints.token-refresh}")

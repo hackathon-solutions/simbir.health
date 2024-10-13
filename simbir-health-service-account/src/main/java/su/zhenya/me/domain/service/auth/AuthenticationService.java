@@ -24,8 +24,8 @@ public class AuthenticationService {
         return accountTokenService.releaseAccountToken(accountId, credentials);
     }
 
-    public boolean verifyToken(AccountToken accountToken) {
-        return accountTokenService.verifyAccountToken(accountToken);
+    public boolean verifyToken(String accessToken) {
+        return accountTokenService.verifyAccountToken(accessToken);
     }
 
     public void suspendToken(AccountToken accountToken) {

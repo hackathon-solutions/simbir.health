@@ -7,6 +7,8 @@ import su.zhenya.me.account.model.AccountToken;
 public interface AccountTokenService {
 
     AccountToken releaseAccountToken(AccountId accountId, AccountCredentials credentials);
-    boolean verifyAccountToken(AccountToken accountToken);
+    boolean verifyAccountToken(CharSequence accessToken);
     void suspendAccountToken(AccountToken accountToken);
+    AccountToken getAccountToken(CharSequence accessToken);
+    AccountTokenDescriptor getAccountTokenDescriptor(CharSequence accessToken);
 }

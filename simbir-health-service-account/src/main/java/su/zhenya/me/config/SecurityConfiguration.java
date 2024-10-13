@@ -19,7 +19,7 @@ public class SecurityConfiguration {
     @Bean
     public HttpRequestMatcherRegistryCustomizer httpRequestMatcherRegistryCustomizer() {
         return registry -> registry
-//                .requestMatchers(getApiPathFor("account", "account-get-all")).denyAll()
+                .requestMatchers(getApiPathFor("account", "account-get-all")).hasRole("ADMIN")
                 .anyRequest().permitAll();
     }
 

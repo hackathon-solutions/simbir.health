@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import su.zhenya.me.security.config.bean.CorsConfigurer;
@@ -19,21 +20,19 @@ import su.zhenya.me.security.config.bean.HttpRequestMatcherRegistryCustomizer;
 import su.zhenya.me.security.config.bean.SecurityFilterChainConfigurer;
 import su.zhenya.me.security.core.access.AccountTokenService;
 import su.zhenya.me.security.core.provider.AuthenticationProvider;
-import su.zhenya.me.security.core.provider.AuthenticationServerUri;
 import su.zhenya.me.security.core.provider.account.AccountProvider;
+import su.zhenya.me.security.core.provider.feign.AuthenticationServerFeignClient;
 import su.zhenya.me.security.jwt.JWTAccountTokenService;
 import su.zhenya.me.security.jwt.ServiceSecret;
 
 // TODO: в перспективе перейти на OAuth2 + свой сервер авторизации
 @Configuration
 @EnableWebSecurity
-@EnableFeignClients
 @RequiredArgsConstructor
 @EnableConfigurationProperties
 @ComponentScan(basePackages = "su.zhenya.me.security")
+@EnableFeignClients(basePackages = "su.zhenya.me.security")
 public class WebSecurityAutoConfiguration {
-
-    private final AuthenticationProperties authenticationProperties;
 
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -51,6 +50,7 @@ public class WebSecurityAutoConfiguration {
                 .addFilterBefore(authenticationProvider, UsernamePasswordAuthenticationFilter.class)
                 .csrf(csrfConfigurer)
                 .cors(corsConfigurer)
+                .sessionManagement(sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
 
@@ -82,8 +82,11 @@ public class WebSecurityAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(AuthenticationProvider.class)
-    public AuthenticationProvider autoAuthenticationProvider() {
-        return new AuthenticationProvider();
+    public AuthenticationProvider autoAuthenticationProvider(
+            AccountTokenService accountTokenService,
+            AuthenticationServerFeignClient authenticationServerFeignClient
+    ) {
+        return new AuthenticationProvider(accountTokenService, authenticationServerFeignClient);
     }
 
     @Bean
@@ -94,31 +97,11 @@ public class WebSecurityAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(AccountProvider.class)
     public AccountProvider accountProvider() {
-        return accountId -> { throw new UnsupportedOperationException("Не реализован поставщик аккаунтов"); };
+        return accountId -> { throw new UnsupportedOperationException("Not implemented account provider for security"); };
     }
 
     @Bean
-    public ServiceSecret serviceSecret(@Value("${service.authentication.secret}") String secret) {
+    public ServiceSecret serviceSecret(@Value("${service.authentication.secret.key}") String secret) {
         return () -> secret;
-    }
-
-    @Bean
-    public AuthenticationServerUri authenticationServerUri() {
-        return new AuthenticationServerUri() {
-            @Override
-            public String getReleaseTokenServerUri() {
-                return authenticationProperties.getTokenReleasePath();
-            }
-
-            @Override
-            public String getVerifyTokenServerUri() {
-                return authenticationProperties.getTokenVerifyPath();
-            }
-
-            @Override
-            public String getSuspendTokenServerUri() {
-                return authenticationProperties.getTokenSuspendPath();
-            }
-        };
     }
 }

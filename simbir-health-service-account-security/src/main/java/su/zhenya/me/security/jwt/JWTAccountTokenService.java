@@ -1,8 +1,5 @@
 package su.zhenya.me.security.jwt;
 
-import static su.zhenya.me.account.model.Account.listRolesToStringRoles;
-import static su.zhenya.me.account.model.Account.stringRolesToListRoles;
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -10,18 +7,15 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import su.zhenya.me.account.model.Account;
 import su.zhenya.me.account.model.AccountCredentials;
 import su.zhenya.me.account.model.AccountId;
 import su.zhenya.me.account.model.AccountToken;
-import su.zhenya.me.account.model.Role;
+import su.zhenya.me.security.core.access.AccountTokenDescriptor;
 import su.zhenya.me.security.core.access.AccountTokenService;
 import su.zhenya.me.security.core.provider.account.AccountNotFoundException;
 import su.zhenya.me.security.core.provider.account.AccountProvider;
@@ -41,8 +35,8 @@ public class JWTAccountTokenService implements AccountTokenService {
                                          .orElseThrow(AccountNotFoundException::new);
 
         String accessToken = createDefaultJWTBuilderFrom(AccountTokenDescriptor.of(account))
-                .withIssuedAt(LocalDateTime.now().toInstant(ZoneOffset.UTC))
-                .withExpiresAt(LocalDateTime.now().plusWeeks(1).toInstant(ZoneOffset.UTC))
+                .withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
+                .withExpiresAt(Date.from(LocalDateTime.now().plusWeeks(1).atZone(ZoneId.systemDefault()).toInstant()))
                 .withIssuer(ISSUER)
                 .sign(Algorithm.HMAC256(serviceSecret.getSecret()));
 
@@ -54,6 +48,7 @@ public class JWTAccountTokenService implements AccountTokenService {
         Arrays.stream(descriptor.getClass().getDeclaredFields())
               .forEach(field -> {
                   try {
+                      field.setAccessible(true);
                       builder.withClaim(field.getName(), field.get(descriptor).toString());
                   } catch (IllegalAccessException e) {
                       throw new RuntimeException(e);
@@ -63,20 +58,20 @@ public class JWTAccountTokenService implements AccountTokenService {
     }
 
     @Override
-    public boolean verifyAccountToken(AccountToken accountToken) {
+    public boolean verifyAccountToken(CharSequence accessToken) {
         try {
-            verifyJWT(accountToken.getTokenValue().toString());
+            verifyJWT(accessToken);
             return true;
         } catch (JWTVerificationException e) {
             return false;
         }
     }
 
-    private DecodedJWT verifyJWT(String jwt) throws JWTVerificationException {
+    private DecodedJWT verifyJWT(CharSequence jwt) throws JWTVerificationException {
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(serviceSecret.getSecret()))
                                   .withIssuer(ISSUER)
                                   .build();
-        return verifier.verify(jwt);
+        return verifier.verify(jwt.toString());
     }
 
     @Override
@@ -84,38 +79,28 @@ public class JWTAccountTokenService implements AccountTokenService {
         // TODO: сделать
     }
 
-    private static AccountTokenDescriptor createDefaultJWTBuilderFrom(DecodedJWT decodedJWT) {
+    @Override
+    public AccountToken getAccountToken(CharSequence accessToken) {
+        AccountTokenDescriptor descriptor = createAccountTokenDescriptorFrom(verifyJWT(accessToken));
+        return new AccountToken(descriptor.getAccountId(), accessToken);
+    }
+
+    @Override
+    public AccountTokenDescriptor getAccountTokenDescriptor(CharSequence accessToken) {
+        return createAccountTokenDescriptorFrom(verifyJWT(accessToken));
+    }
+
+    private static AccountTokenDescriptor createAccountTokenDescriptorFrom(DecodedJWT decodedJWT) {
         AccountTokenDescriptor descriptor = new AccountTokenDescriptor();
         Arrays.stream(descriptor.getClass().getDeclaredFields())
               .forEach(field -> {
                   try {
                       field.setAccessible(true);
-                      field.set(descriptor, decodedJWT.getClaim(field.getName()));
+                      field.set(descriptor, decodedJWT.getClaim(field.getName()).as(field.getType()));
                   } catch (IllegalAccessException e) {
                       throw new RuntimeException(e);
                   }
               });
         return descriptor;
-    }
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class AccountTokenDescriptor {
-
-        private long accountId;
-        private String accountRoles;
-
-        public static AccountTokenDescriptor of(Account account) {
-            return new AccountTokenDescriptor(account.getAccountId().getId(), listRolesToStringRoles(account.getRoles()));
-        }
-
-        public AccountId getAccountId() {
-            return new AccountId(accountId);
-        }
-
-        public List<Role> getAccountRoles() {
-            return stringRolesToListRoles(accountRoles);
-        }
     }
 }

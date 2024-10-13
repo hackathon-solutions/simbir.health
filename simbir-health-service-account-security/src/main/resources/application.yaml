@@ -1,8 +1,0 @@
-authentication:
-  server:
-    token-release-path: ""
-    token-verify-path: ""
-    token-suspend-path: ""
-service:
-  authentication:
-    secret: ""
