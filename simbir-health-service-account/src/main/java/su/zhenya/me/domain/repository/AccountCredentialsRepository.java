@@ -9,4 +9,5 @@ import su.zhenya.me.domain.entity.AccountCredentialsEntity;
 public interface AccountCredentialsRepository extends JpaRepository<AccountCredentialsEntity, AccountId> {
 
     AccountCredentialsEntity findByUsernameAndPassword(String username, String password);
+    boolean existsByUsername(String username);
 }

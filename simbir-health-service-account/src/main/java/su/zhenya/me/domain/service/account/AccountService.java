@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import su.zhenya.me.account.model.Account;
 import su.zhenya.me.account.model.AccountId;
+import su.zhenya.me.common.exception.ReplaceException;
 import su.zhenya.me.domain.entity.AccountCredentialsEntity;
 import su.zhenya.me.domain.entity.AccountEntity;
 import su.zhenya.me.domain.entity.mapper.AccountEntityMapper;
@@ -21,6 +22,10 @@ public class AccountService {
 
     @Transactional
     public Account saveAccount(Account account) {
+        if (existsAccountByUsername(account)) {
+            throw new ReplaceException();
+        }
+
         AccountEntity accountEntity = accountEntityMapper.domainToEntity(account);
         AccountCredentialsEntity accountCredentialsEntity = accountEntity.getCredentials();
         accountCredentialsEntity.setAccountId(accountEntity.getAccountId());
@@ -32,5 +37,9 @@ public class AccountService {
 
     public void deleteAccount(AccountId accountId) {
         accountRepository.deleteById(accountId);
+    }
+
+    public boolean existsAccountByUsername(Account account) {
+        return accountCredentialsRepository.existsByUsername(account.getCredentials().getUsername());
     }
 }

@@ -43,6 +43,7 @@ public class AuthenticationController {
         return authenticationService.verifyToken(accessToken);
     }
 
+    // TODO: не знаю зачем он, но реализовать как-нибудь потом
     @PostMapping("${service.account.api.controllers.authentication.endpoints.token-refresh}")
     public void tokenRefresh() {
     }

@@ -21,7 +21,7 @@
         </dependency>
         <dependency>
             <groupId>su.zhenya.me</groupId>
-            <artifactId>simbir-health-service-account-security</artifactId>
+            <artifactId>simbir-health-service-common</artifactId>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->

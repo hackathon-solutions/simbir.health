@@ -8,7 +8,7 @@ import su.zhenya.me.account.model.Account;
 import su.zhenya.me.account.model.AccountId;
 import su.zhenya.me.domain.entity.mapper.AccountEntityMapper;
 import su.zhenya.me.domain.repository.AccountRepository;
-import su.zhenya.me.domain.stub.ReplaceException;
+import su.zhenya.me.common.exception.ReplaceException;
 
 @Service
 @RequiredArgsConstructor
