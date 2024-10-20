@@ -15,7 +15,7 @@ import su.zhenya.me.common.security.core.provider.AuthorizationContext;
 import su.zhenya.me.common.security.core.provider.account.AccountProvider;
 import su.zhenya.me.common.security.core.provider.feign.AuthenticationServerFeignClient;
 import su.zhenya.me.common.security.jwt.JWTAccountTokenService;
-import su.zhenya.me.common.security.core.access.ServiceSecret;
+import su.zhenya.me.common.security.jwt.ServiceSecret;
 
 // TODO: в перспективе перейти на OAuth2 + свой сервер авторизации
 @Configuration

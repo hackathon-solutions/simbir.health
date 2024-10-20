@@ -27,12 +27,6 @@ public class AuthenticationProvider extends OncePerRequestFilter {
     private final AuthenticationServerFeignClient authenticationClient;
     private final AuthorizationContext authorizationContext;
 
-    // TODO: реализовать выдачу пары токенов. токена с данными юзера (accessToken). и токен для получения accessToken (refreshToken), ничего в нем
-    // нет, используется только для выпуска accessToken, НЕ ВЫДАЕТ НИКАКИЕ ГРАНТЫ!!!!!
-    // expires:
-    //  refreshToken - 7 дней
-    //  accessToken - 1 минута
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -42,7 +36,7 @@ public class AuthenticationProvider extends OncePerRequestFilter {
                     .ifPresentOrElse(
                             accessToken -> {
                                 AccountTokenDescriptor descriptor = accountTokenService.getAccountTokenDescriptor(accessToken);
-                                Authorization authorization = new AuthorizationImpl(true, () -> accessToken, descriptor);
+                                Authorization authorization = new AuthorizationImpl(true, accessToken, descriptor);
                                 authorizationContext.setAuthorization(authorization);
                             },
                             () -> {

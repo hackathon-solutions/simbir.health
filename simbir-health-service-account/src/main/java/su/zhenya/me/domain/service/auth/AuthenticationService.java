@@ -24,8 +24,16 @@ public class AuthenticationService {
         return accountTokenService.releaseAccountToken(accountId, credentials);
     }
 
+    public CharSequence releaseRefreshToken(AccountId accountId, AccountCredentials credentials) {
+        return accountTokenService.releaseRefreshToken(accountId, credentials);
+    }
+
     public boolean verifyToken(String accessToken) {
         return accountTokenService.verifyAccountToken(accessToken);
+    }
+
+    public AccountToken refreshToken(String refreshToken) {
+        return accountTokenService.releaseAccountToken(refreshToken);
     }
 
     public void suspendToken(AccountToken accountToken) {

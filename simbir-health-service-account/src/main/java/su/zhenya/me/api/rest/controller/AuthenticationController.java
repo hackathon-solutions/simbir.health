@@ -13,6 +13,7 @@ import su.zhenya.me.account.model.AccountToken;
 import su.zhenya.me.api.rest.mapper.AccountRequestMapper;
 import su.zhenya.me.api.rest.request.AccountCreateRequest;
 import su.zhenya.me.api.rest.request.ReleaseAccountTokenRequest;
+import su.zhenya.me.api.rest.response.AccountTokenResponse;
 import su.zhenya.me.domain.service.auth.AuthenticationService;
 
 @RestController
@@ -24,13 +25,15 @@ public class AuthenticationController {
     private final AccountRequestMapper accountRequestMapper;
 
     @PostMapping("${service.account.api.controllers.authentication.endpoints.account-sign-up}")
-    public AccountId signUp(AccountCreateRequest request) {
+    public AccountId signUp(@RequestBody AccountCreateRequest request) {
         return authenticationService.accountCreate(accountRequestMapper.requestToDomain(request)).getAccountId();
     }
 
     @PostMapping("${service.account.api.controllers.authentication.endpoints.account-sign-in}")
-    public AccountToken signIn(@RequestBody ReleaseAccountTokenRequest request) {
-        return authenticationService.releaseToken(request.getAccountId(), request.getCredentials());
+    public AccountTokenResponse signIn(@RequestBody ReleaseAccountTokenRequest request) {
+        AccountToken accountToken = authenticationService.releaseToken(request.getAccountId(), request.getCredentials());
+        CharSequence refreshToken = authenticationService.releaseRefreshToken(request.getAccountId(), request.getCredentials());
+        return new AccountTokenResponse(accountToken, refreshToken);
     }
 
     @PutMapping("${service.account.api.controllers.authentication.endpoints.token-ban}")
@@ -43,8 +46,8 @@ public class AuthenticationController {
         return authenticationService.verifyToken(accessToken);
     }
 
-    // TODO: не знаю зачем он, но реализовать как-нибудь потом
     @PostMapping("${service.account.api.controllers.authentication.endpoints.token-refresh}")
-    public void tokenRefresh() {
+    public AccountToken tokenRefresh(@RequestParam String refreshToken) {
+        return authenticationService.refreshToken(refreshToken);
     }
 }

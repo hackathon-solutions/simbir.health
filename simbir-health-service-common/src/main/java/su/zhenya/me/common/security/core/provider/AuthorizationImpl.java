@@ -7,13 +7,12 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import su.zhenya.me.account.model.Role;
 import su.zhenya.me.common.security.core.access.AccountTokenDescriptor;
-import su.zhenya.me.common.security.core.access.ServiceSecret;
 
 @RequiredArgsConstructor
 public class AuthorizationImpl implements Authorization {
 
     private final boolean authorized;
-    private final ServiceSecret serviceSecret;
+    private final String accessToken;
     private final AccountTokenDescriptor accountTokenDescriptor;
 
     @Override
@@ -22,8 +21,8 @@ public class AuthorizationImpl implements Authorization {
     }
 
     @Override
-    public ServiceSecret getServiceSecret() {
-        return serviceSecret;
+    public String getAccessToken() {
+        return accessToken;
     }
 
     @Override

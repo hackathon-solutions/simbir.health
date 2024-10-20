@@ -1,4 +1,4 @@
-package su.zhenya.me.common.security.core.access;
+package su.zhenya.me.common.security.jwt;
 
 public interface ServiceSecret {
 
