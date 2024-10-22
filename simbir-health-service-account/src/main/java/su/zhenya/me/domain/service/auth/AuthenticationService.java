@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import su.zhenya.me.account.model.Account;
 import su.zhenya.me.account.model.AccountCredentials;
-import su.zhenya.me.account.model.AccountId;
 import su.zhenya.me.account.model.AccountToken;
 import su.zhenya.me.common.security.core.access.AccountTokenService;
 import su.zhenya.me.domain.service.account.AccountService;
@@ -17,15 +16,15 @@ public class AuthenticationService {
     private final AccountService accountService;
 
     public Account accountCreate(Account account) {
-        return accountService.saveAccount(account);
+        return accountService.createAccount(account);
     }
 
-    public AccountToken releaseToken(AccountId accountId, AccountCredentials credentials) {
-        return accountTokenService.releaseAccountToken(accountId, credentials);
+    public AccountToken releaseToken(AccountCredentials credentials) {
+        return accountTokenService.releaseAccountToken(credentials);
     }
 
-    public CharSequence releaseRefreshToken(AccountId accountId, AccountCredentials credentials) {
-        return accountTokenService.releaseRefreshToken(accountId, credentials);
+    public CharSequence releaseRefreshToken(AccountCredentials credentials) {
+        return accountTokenService.releaseRefreshToken(credentials);
     }
 
     public boolean verifyToken(String accessToken) {

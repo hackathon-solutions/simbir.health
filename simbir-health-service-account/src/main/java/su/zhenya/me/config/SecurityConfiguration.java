@@ -14,6 +14,6 @@ public class SecurityConfiguration {
 
     @Bean
     public AccountProvider accountProvider(AccountEntityMapper mapper, AccountRepository repository) {
-        return accountId -> Optional.ofNullable(mapper.entityToDomain(repository.findById(accountId).get()));
+        return username -> Optional.ofNullable(mapper.entityToDomain(repository.findByCredentials_Username(username)));
     }
 }

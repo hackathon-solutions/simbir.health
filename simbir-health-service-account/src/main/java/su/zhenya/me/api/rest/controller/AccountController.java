@@ -1,6 +1,8 @@
 package su.zhenya.me.api.rest.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +19,7 @@ import su.zhenya.me.account.model.Role;
 import su.zhenya.me.api.rest.mapper.AccountRequestMapper;
 import su.zhenya.me.api.rest.mapper.AccountResponseMapper;
 import su.zhenya.me.api.rest.request.AccountCreateRequest;
+import su.zhenya.me.api.rest.request.AccountSelfUpdateRequest;
 import su.zhenya.me.api.rest.request.AccountUpdateRequest;
 import su.zhenya.me.api.rest.response.AccountResponse;
 import su.zhenya.me.common.security.bean.authority.annotation.AuthorizationContext;
@@ -40,7 +43,7 @@ public class AccountController {
 
     @OnlyAuthorized
     @GetMapping("${service.account.api.controllers.account.endpoints.account-get-current}")
-    public AccountResponse accountGetCurrent(@AuthorizationContext Authorization authorization) {
+    public AccountResponse accountGetCurrent(@Parameter(hidden = true) @AuthorizationContext Authorization authorization) {
         Account account = accountQueryService
                 .getAccountBy(accountTokenService.getAccountToken(authorization.getAccessToken()).getAccountIdBind());
         return accountResponseMapper.domainToResponse(account);
@@ -48,15 +51,18 @@ public class AccountController {
 
     @OnlyAuthorized
     @PutMapping("${service.account.api.controllers.account.endpoints.account-patch-current}")
-    public AccountResponse accountPatchCurrent(@RequestBody AccountUpdateRequest request, @AuthorizationContext Authorization authorization) {
+    public AccountResponse accountPatchCurrent(
+            @RequestBody AccountSelfUpdateRequest request,
+            @Parameter(hidden = true) @AuthorizationContext Authorization authorization
+    ) {
         Account account = accountRequestMapper.requestToDomain(request);
         account.setAccountId(authorization.getAccountTokenDescriptor().getAccountId());
         return accountResponseMapper.domainToResponse(accountService.saveAccount(account));
     }
 
-    @OnlyAuthorized
     @GetMapping("${service.account.api.controllers.account.endpoints.account-get-all}")
-    public Page<AccountResponse> accountGetAll(Pageable pageable) {
+    @HasRole(Role.ADMIN)
+    public Page<AccountResponse> accountGetAll(@ParameterObject Pageable pageable) {
         return accountQueryService.getAccounts(pageable).map(accountResponseMapper::domainToResponse);
     }
 

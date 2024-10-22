@@ -8,7 +8,9 @@ import su.zhenya.me.account.model.AccountCredentials;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReleaseAccountTokenRequest {
+public class AccountSelfUpdateRequest {
 
+    private String firstName;
+    private String lastName;
     private AccountCredentials credentials;
 }

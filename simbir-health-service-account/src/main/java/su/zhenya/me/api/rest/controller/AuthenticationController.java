@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import su.zhenya.me.account.model.AccountId;
 import su.zhenya.me.account.model.AccountToken;
 import su.zhenya.me.api.rest.mapper.AccountRequestMapper;
-import su.zhenya.me.api.rest.request.AccountCreateRequest;
+import su.zhenya.me.api.rest.request.AccountSignUpRequest;
 import su.zhenya.me.api.rest.request.ReleaseAccountTokenRequest;
 import su.zhenya.me.api.rest.response.AccountTokenResponse;
+import su.zhenya.me.common.security.bean.authority.annotation.OnlyAuthorized;
 import su.zhenya.me.domain.service.auth.AuthenticationService;
 
 @RestController
@@ -25,19 +26,20 @@ public class AuthenticationController {
     private final AccountRequestMapper accountRequestMapper;
 
     @PostMapping("${service.account.api.controllers.authentication.endpoints.account-sign-up}")
-    public AccountId signUp(@RequestBody AccountCreateRequest request) {
+    public AccountId signUp(@RequestBody AccountSignUpRequest request) {
         return authenticationService.accountCreate(accountRequestMapper.requestToDomain(request)).getAccountId();
     }
 
     @PostMapping("${service.account.api.controllers.authentication.endpoints.account-sign-in}")
     public AccountTokenResponse signIn(@RequestBody ReleaseAccountTokenRequest request) {
-        AccountToken accountToken = authenticationService.releaseToken(request.getAccountId(), request.getCredentials());
-        CharSequence refreshToken = authenticationService.releaseRefreshToken(request.getAccountId(), request.getCredentials());
+        AccountToken accountToken = authenticationService.releaseToken(request.getCredentials());
+        CharSequence refreshToken = authenticationService.releaseRefreshToken(request.getCredentials());
         return new AccountTokenResponse(accountToken, refreshToken);
     }
 
+    @OnlyAuthorized
     @PutMapping("${service.account.api.controllers.authentication.endpoints.token-ban}")
-    public void tokenBan(@RequestBody AccountToken accountToken) {
+    public void tokenSuspend(@RequestBody AccountToken accountToken) {
         authenticationService.suspendToken(accountToken);
     }
 

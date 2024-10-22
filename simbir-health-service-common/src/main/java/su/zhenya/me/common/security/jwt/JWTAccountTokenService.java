@@ -23,6 +23,18 @@ import su.zhenya.me.common.security.core.access.AccountTokenService;
 import su.zhenya.me.common.security.core.provider.account.AccountNotFoundException;
 import su.zhenya.me.common.security.core.provider.account.AccountProvider;
 
+// TODO: возможно, все таки стоит добавить полную ("интроспекцию" - далее token_info) куда-нибудь к verify, однако нужно ли это
+// в рамках текущих сервисов? token_info по verify и так является token_info. судя по всему спека oauth
+// устарела еще до того, как появился JWT. но - спека не ограничивает нас в реализации token_info, она лишь обязывает
+// передавать свойство дееспособности токена, так называемое поле active. ref на спеку:
+/*
+ * The Token Introspection Endpoint should respond with a JSON object with the properties listed below.
+ * Only the “active” property is required, the rest are optional. Some of the properties in the Introspection spec
+ * are specifically for JWT tokens, so we will only cover the basic ones here. You can also add additional properties
+ * in the response if you have additional information about a token that may be useful.
+ */
+// scopes, client_id, конечно, тема, но реализовывать свой ID дорого стоит(, да и в рамках текущей задачи не требуется.
+// но на будущее можно глянуть да
 @RequiredArgsConstructor
 public class JWTAccountTokenService implements AccountTokenService {
 
@@ -35,8 +47,8 @@ public class JWTAccountTokenService implements AccountTokenService {
     private final ServiceSecret serviceSecret;
 
     @Override
-    public AccountToken releaseAccountToken(AccountId accountId, AccountCredentials credentials) {
-        Account account = accountProvider.findByAccountId(accountId)
+    public AccountToken releaseAccountToken(AccountCredentials credentials) {
+        Account account = accountProvider.findByUsername(credentials.getUsername())
                                          .filter(acc -> acc.getCredentials().equals(credentials))
                                          .orElseThrow(AccountNotFoundException::new);
 
@@ -52,7 +64,7 @@ public class JWTAccountTokenService implements AccountTokenService {
         }
 
         AccountTokenDescriptor descriptor = getAccountTokenDescriptor(refreshToken);
-        Account account = accountProvider.findByAccountId(descriptor.getAccountId()).orElseThrow(AccountNotFoundException::new);
+        Account account = accountProvider.findByUsername(descriptor.getUsername()).orElseThrow(AccountNotFoundException::new);
 
         String accessToken = createAccessTokenFrom(account);
 
@@ -60,8 +72,8 @@ public class JWTAccountTokenService implements AccountTokenService {
     }
 
     @Override
-    public CharSequence releaseRefreshToken(AccountId accountId, AccountCredentials credentials) {
-        Account account = accountProvider.findByAccountId(accountId)
+    public CharSequence releaseRefreshToken(AccountCredentials credentials) {
+        Account account = accountProvider.findByUsername(credentials.getUsername())
                                          .filter(acc -> acc.getCredentials().equals(credentials))
                                          .orElseThrow(AccountNotFoundException::new);
 

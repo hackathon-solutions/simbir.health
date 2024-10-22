@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import su.zhenya.me.account.model.Account;
 import su.zhenya.me.account.model.AccountId;
+import su.zhenya.me.account.model.Role;
 import su.zhenya.me.domain.entity.mapper.AccountEntityMapper;
 import su.zhenya.me.domain.repository.AccountRepository;
 import su.zhenya.me.common.exception.ReplaceException;
@@ -25,5 +26,10 @@ public class AccountQueryService {
         return accountRepository.findById(accountId)
                                 .map(accountEntityMapper::entityToDomain)
                                 .orElseThrow(ReplaceException::new);
+    }
+
+    public Page<Account> getAccountsFiltered(Role role, String fullNameFilter, Pageable pageable) {
+        return accountRepository.findByRolesAndFullName(role.toString(), fullNameFilter, pageable)
+                                .map(accountEntityMapper::entityToDomain);
     }
 }

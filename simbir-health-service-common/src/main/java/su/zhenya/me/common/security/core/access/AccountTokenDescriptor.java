@@ -18,9 +18,14 @@ public class AccountTokenDescriptor {
 
     private long accountId;
     private String accountRoles;
+    private String username;
 
     public static AccountTokenDescriptor of(Account account) {
-        return new AccountTokenDescriptor(account.getAccountId().getId(), listRolesToStringRoles(account.getRoles()));
+        return new AccountTokenDescriptor(
+                account.getAccountId().getId(),
+                listRolesToStringRoles(account.getRoles()),
+                account.getCredentials().getUsername()
+        );
     }
 
     public AccountId getAccountId() {

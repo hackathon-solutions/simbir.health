@@ -6,5 +6,5 @@ import su.zhenya.me.account.model.AccountId;
 
 public interface AccountProvider {
 
-    Optional<Account> findByAccountId(AccountId accountId);
+    Optional<Account> findByUsername(String username);
 }

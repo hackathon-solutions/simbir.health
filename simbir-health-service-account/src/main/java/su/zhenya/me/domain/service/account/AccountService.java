@@ -21,11 +21,16 @@ public class AccountService {
     private final AccountCredentialsRepository accountCredentialsRepository;
 
     @Transactional
-    public Account saveAccount(Account account) {
+    public Account createAccount(Account account) {
         if (existsAccountByUsername(account)) {
             throw new ReplaceException();
         }
 
+        return saveAccount(account);
+    }
+
+    @Transactional
+    public Account saveAccount(Account account) {
         AccountEntity accountEntity = accountEntityMapper.domainToEntity(account);
         AccountCredentialsEntity accountCredentialsEntity = accountEntity.getCredentials();
         accountCredentialsEntity.setAccountId(accountEntity.getAccountId());
