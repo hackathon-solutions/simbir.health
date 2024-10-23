@@ -8,5 +8,6 @@ CREATE TABLE IF NOT EXISTS accounts (
 CREATE TABLE IF NOT EXISTS account_credentials (
     account_id BIGSERIAL PRIMARY KEY NOT NULL,
     username VARCHAR(500) UNIQUE NOT NULL,
-    password VARCHAR(500) NOT NULL
+    password VARCHAR(500) NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES accounts (account_id) ON DELETE CASCADE
 );

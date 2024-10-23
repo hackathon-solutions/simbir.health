@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Hospital {
 
+    private HospitalId hospitalId;
     private String name;
     private String address;
     private String contactPhone;

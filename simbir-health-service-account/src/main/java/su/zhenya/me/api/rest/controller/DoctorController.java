@@ -17,14 +17,14 @@ import su.zhenya.me.domain.service.doctor.DoctorService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${service.account.api.controllers.doctor.path}")
+@RequestMapping("${service.rest-api.controllers.doctor.path}")
 public class DoctorController {
 
     private final DoctorService doctorService;
     private final AccountResponseMapper accountResponseMapper;
 
     @OnlyAuthorized
-    @GetMapping("${service.account.api.controllers.doctor.endpoints.doctors-get-all}")
+    @GetMapping("${service.rest-api.controllers.doctor.endpoints.doctors-get-all}")
     public Page<AccountResponse> accountDoctorsGetAll(
             @RequestParam(required = false, defaultValue = "") String filterName,
             @ParameterObject Pageable pageable
@@ -34,7 +34,7 @@ public class DoctorController {
     }
 
     @OnlyAuthorized
-    @GetMapping("${service.account.api.controllers.doctor.endpoints.doctors-get-by-id}")
+    @GetMapping("${service.rest-api.controllers.doctor.endpoints.doctors-get-by-id}")
     public AccountResponse accountDoctorGetById(@PathVariable long accountId) {
         return accountResponseMapper.domainToResponse(doctorService.getDoctorBy(new AccountId(accountId)));
     }

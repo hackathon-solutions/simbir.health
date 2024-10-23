@@ -32,7 +32,7 @@ import su.zhenya.me.domain.service.account.AccountService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${service.account.api.controllers.account.path}")
+@RequestMapping("${service.rest-api.controllers.account.path}")
 public class AccountController {
 
     private final AccountResponseMapper accountResponseMapper;
@@ -42,7 +42,7 @@ public class AccountController {
     private final AccountTokenService accountTokenService;
 
     @OnlyAuthorized
-    @GetMapping("${service.account.api.controllers.account.endpoints.account-get-current}")
+    @GetMapping("${service.rest-api.controllers.account.endpoints.account-get-current}")
     public AccountResponse accountGetCurrent(@Parameter(hidden = true) @AuthorizationContext Authorization authorization) {
         Account account = accountQueryService
                 .getAccountBy(accountTokenService.getAccountToken(authorization.getAccessToken()).getAccountIdBind());
@@ -50,7 +50,7 @@ public class AccountController {
     }
 
     @OnlyAuthorized
-    @PutMapping("${service.account.api.controllers.account.endpoints.account-patch-current}")
+    @PutMapping("${service.rest-api.controllers.account.endpoints.account-patch-current}")
     public AccountResponse accountPatchCurrent(
             @RequestBody AccountSelfUpdateRequest request,
             @Parameter(hidden = true) @AuthorizationContext Authorization authorization
@@ -60,20 +60,20 @@ public class AccountController {
         return accountResponseMapper.domainToResponse(accountService.saveAccount(account));
     }
 
-    @GetMapping("${service.account.api.controllers.account.endpoints.account-get-all}")
+    @GetMapping("${service.rest-api.controllers.account.endpoints.account-get-all}")
     @HasRole(Role.ADMIN)
     public Page<AccountResponse> accountGetAll(@ParameterObject Pageable pageable) {
         return accountQueryService.getAccounts(pageable).map(accountResponseMapper::domainToResponse);
     }
 
-    @PostMapping("${service.account.api.controllers.account.endpoints.account-create}")
+    @PostMapping("${service.rest-api.controllers.account.endpoints.account-create}")
     @HasRole(Role.ADMIN)
     public AccountId accountCreate(@RequestBody AccountCreateRequest request) {
         return accountResponseMapper.domainToResponse(accountService.saveAccount(accountRequestMapper.requestToDomain(request))).getAccountId();
     }
 
     @HasRole(Role.ADMIN)
-    @PutMapping("${service.account.api.controllers.account.endpoints.account-put-by-id}")
+    @PutMapping("${service.rest-api.controllers.account.endpoints.account-put-by-id}")
     public AccountResponse accountPatchById(@PathVariable long accountId, @RequestBody AccountUpdateRequest request) {
         Account account = accountRequestMapper.requestToDomain(request);
         account.setAccountId(new AccountId(accountId));
@@ -82,7 +82,7 @@ public class AccountController {
 
     // TODO: реализовать "мягкое" удаление
     @HasRole(Role.ADMIN)
-    @DeleteMapping("${service.account.api.controllers.account.endpoints.account-delete-by-id}")
+    @DeleteMapping("${service.rest-api.controllers.account.endpoints.account-delete-by-id}")
     public void accountDeleteById(@PathVariable long accountId) {
         accountService.deleteAccount(new AccountId(accountId));
     }

@@ -4,7 +4,7 @@ spring:
   datasource:
     username: ${ACCOUNT_POSTGRES_DB_USERNAME:postgres}
     password: ${ACCOUNT_POSTGRES_DB_PASSWORD:postgres}
-    url: jdbc:postgresql://${ACCOUNT_POSTGRES_DB_HOSTNAME__:localhost}:${ACCOUNT_POSTGRES_DB_PORT}/${ACCOUNT_POSTGRES_DB_NAME}
+    url: jdbc:postgresql://${ACCOUNT_POSTGRES_DB_HOSTNAME______________:localhost}:${ACCOUNT_POSTGRES_DB_PORT}/${ACCOUNT_POSTGRES_DB_NAME}
   jpa:
     hibernate:
       ddl-auto: validate
@@ -13,32 +13,31 @@ service:
     secret:
       key: ${ACCOUNT_SERVICE_SECRET}
     authorization-server:
-      server-hostname: "http://localhost:8085/"
+      server-hostname: "http://localhost:8085/api/"
       access-token-release-path: "/Authentication/SignIn"
       access-token-suspend-path: "/Authentication/SignOut"
       access-token-verify-path: "/Authentication/Validate"
-  account:
-    api:
-      controllers:
-        authentication:
-          path: "/Authentication"
-          endpoints:
-            account-sign-up: "/SignUp"
-            account-sign-in: "/SignIn"
-            token-ban: "/SignOut"
-            token-validate: "/Validate"
-            token-refresh: "/Refresh"
-        account:
-          path: "/Accounts"
-          endpoints:
-            account-get-current: "/Me"
-            account-patch-current: "/Update"
-            account-get-all: "/"
-            account-create: "/"
-            account-put-by-id: "/{accountId}"
-            account-delete-by-id: "/{accountId}"
-        doctor:
-          path: "/Doctors"
-          endpoints:
-            doctors-get-all: "/"
-            doctors-get-by-id: "/{accountId}"
+  rest-api:
+    controllers:
+      authentication:
+        path: "/api/Authentication"
+        endpoints:
+          account-sign-up: "/SignUp"
+          account-sign-in: "/SignIn"
+          token-ban: "/SignOut"
+          token-validate: "/Validate"
+          token-refresh: "/Refresh"
+      account:
+        path: "/api/Accounts"
+        endpoints:
+          account-get-current: "/Me"
+          account-patch-current: "/Update"
+          account-get-all: "/"
+          account-create: "/"
+          account-put-by-id: "/{accountId}"
+          account-delete-by-id: "/{accountId}"
+      doctor:
+        path: "/api/Doctors"
+        endpoints:
+          doctors-get-all: "/"
+          doctors-get-by-id: "/{accountId}"

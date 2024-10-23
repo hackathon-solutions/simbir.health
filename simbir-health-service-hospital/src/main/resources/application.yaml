@@ -1,0 +1,28 @@
+server:
+  port: ${HOSPITAL_SERVICE_PORT}
+spring:
+  datasource:
+    username: ${HOSPITAL_POSTGRES_DB_USERNAME:postgres}
+    password: ${HOSPITAL_POSTGRES_DB_PASSWORD:postgres}
+    url: jdbc:postgresql://${HOSPITAL_POSTGRES_DB_HOSTNAME______________:localhost}:${HOSPITAL_POSTGRES_DB_PORT}/${HOSPITAL_POSTGRES_DB_NAME}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+service:
+  authentication:
+    authorization-server:
+      server-hostname: "http://localhost:${ACCOUNT_SERVICE_PORT}/api/"
+      access-token-release-path: "/Authentication/SignIn"
+      access-token-suspend-path: "/Authentication/SignOut"
+      access-token-verify-path: "/Authentication/Validate"
+  rest-api:
+    controllers:
+      hospital:
+        path: "/api/Hospitals"
+        endpoints:
+          hospital-get-all: "/"
+          get-hospital-by-id: "/{hospitalId}"
+          get-hospital-rooms-by-hospital-id: "/{hospitalId}/Rooms"
+          create-hospital-post: "/"
+          hospital-patch-by-id: "/{hospitalId}"
+          hospital-delete-by-id: "/{hospitalId}"

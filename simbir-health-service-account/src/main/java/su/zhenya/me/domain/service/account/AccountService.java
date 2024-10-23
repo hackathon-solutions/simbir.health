@@ -40,7 +40,9 @@ public class AccountService {
         return accountEntityMapper.entityToDomain(accountEntity);
     }
 
+    @Transactional
     public void deleteAccount(AccountId accountId) {
+        // TODO: не удаляет
         accountRepository.deleteById(accountId);
     }
 
