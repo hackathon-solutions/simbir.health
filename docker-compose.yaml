@@ -18,3 +18,13 @@ services:
       POSTGRES_DB: ${HOSPITAL_POSTGRES_DB_NAME}
     ports:
       - ${HOSPITAL_POSTGRES_DB_PORT}:5432
+
+  timetable-postgres-db:
+    image: postgres:15.7
+    hostname: ${TIMETABLE_POSTGRES_DB_HOSTNAME}
+    environment:
+      POSTGRES_USER: ${TIMETABLE_POSTGRES_DB_USERNAME}
+      POSTGRES_PASSWORD: ${TIMETABLE_POSTGRES_DB_PASSWORD}
+      POSTGRES_DB: ${TIMETABLE_POSTGRES_DB_NAME}
+    ports:
+      - ${TIMETABLE_POSTGRES_DB_PORT}:5432

@@ -19,6 +19,10 @@
             <groupId>su.zhenya.me</groupId>
             <artifactId>simbir-health-service-hospital-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>su.zhenya.me</groupId>
+            <artifactId>simbir-health-service-account-domain</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

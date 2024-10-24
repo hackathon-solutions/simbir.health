@@ -1,0 +1,36 @@
+server:
+  port: ${TIMETABLE_SERVICE_PORT}
+spring:
+  datasource:
+    username: ${TIMETABLE_POSTGRES_DB_USERNAME:postgres}
+    password: ${TIMETABLE_POSTGRES_DB_PASSWORD:postgres}
+    url: jdbc:postgresql://${TIMETABLE_POSTGRES_DB_HOSTNAME______________:localhost}:${TIMETABLE_POSTGRES_DB_PORT}/${TIMETABLE_POSTGRES_DB_NAME}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+service:
+  authentication:
+    authorization-server:
+      server-hostname: "http://localhost:8085/api/"
+      access-token-release-path: "/Authentication/SignIn"
+      access-token-suspend-path: "/Authentication/SignOut"
+      access-token-verify-path: "/Authentication/Validate"
+  rest-api:
+    controllers:
+      timetable:
+        path: "/api/Timetable"
+        endpoints:
+          create-timetable-post: "/"
+          patch-timetable-by-id: "/{appointmentId}"
+          delete-timetable-by-id: "/{appointmentId}"
+          delete-timetable-doctor-by-id: "/Doctor/{doctorId}"
+          delete-timetable-hospital-by-id: "/Hospital/{hospitalId}"
+          get-all-timetable-hospital-by-id: "/Hospital/{hospitalId}"
+          get-all-timetable-doctor-by-id: "/Doctor/{doctorId}"
+          get-timetable-hospital-room-by-id: "/Hospital/{hospitalId}/Room/{room}"
+          get-free-appointments-by-doctor-timetable-id: "/{timetableId}/Appointments"
+          create-patient-appointment-by-id: "/{timetableId}/Appointments"
+      appointment:
+        path: "/api/Appointment"
+        endpoints:
+          delete-appointment-by-id: "/{appointmentId}"
