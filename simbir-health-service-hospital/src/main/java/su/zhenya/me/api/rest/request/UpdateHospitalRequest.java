@@ -1,4 +1,4 @@
-package su.zhenya.me.hospital.model;
+package su.zhenya.me.api.rest.request;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -8,9 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Hospital {
+public class UpdateHospitalRequest {
 
-    private HospitalId hospitalId;
     private String name;
     private String address;
     private String contactPhone;

@@ -11,7 +11,6 @@ import org.hibernate.usertype.EnhancedUserType;
 import org.hibernate.usertype.UserType;
 import su.zhenya.me.account.model.AccountId;
 
-// TODO: рассмотреть возможность перехода на @Embedded
 public class AccountIdType implements UserType<AccountId>, EnhancedUserType<AccountId> {
 
     @Override

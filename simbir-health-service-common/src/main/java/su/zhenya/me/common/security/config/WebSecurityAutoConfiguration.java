@@ -3,6 +3,7 @@ package su.zhenya.me.common.security.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
@@ -48,7 +49,7 @@ public class WebSecurityAutoConfiguration {
     }
 
     @Bean
-    public ServiceSecret serviceSecret(@Value("${service.authentication.secret.key}") String secret) {
+    public ServiceSecret serviceSecret(@Value("${service.authentication.secret.key:}") String secret) {
         return () -> secret;
     }
 
