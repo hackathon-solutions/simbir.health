@@ -21,6 +21,10 @@ public class Account {
     private AccountCredentials credentials;
     private List<Role> roles = List.of(Role.USER);
 
+    public Account(AccountId accountId) {
+        this.accountId = accountId;
+    }
+
     public static String listRolesToStringRoles(List<Role> roles) {
         return String.join(ACCOUNT_ROLES_STRING_DELIMITER, roles.stream().map(Role::toString).toList());
     }

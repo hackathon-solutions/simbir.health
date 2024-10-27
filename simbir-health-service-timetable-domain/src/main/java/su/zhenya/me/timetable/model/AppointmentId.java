@@ -11,4 +11,8 @@ import lombok.NoArgsConstructor;
 public class AppointmentId {
 
     private UUID id;
+
+    public static AppointmentId randomId() {
+        return new AppointmentId(UUID.randomUUID());
+    }
 }

@@ -15,4 +15,8 @@ public class Hospital {
     private String address;
     private String contactPhone;
     private List<String> rooms;
+
+    public Hospital(HospitalId hospitalId) {
+        this.hospitalId = hospitalId;
+    }
 }

@@ -11,4 +11,8 @@ import lombok.NoArgsConstructor;
 public class TimetableId {
 
     private UUID id;
+
+    public static TimetableId randomId() {
+        return new TimetableId(UUID.randomUUID());
+    }
 }

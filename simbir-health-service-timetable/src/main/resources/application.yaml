@@ -20,10 +20,10 @@ service:
       timetable:
         path: "/api/Timetable"
         endpoints:
-          create-timetable-post: "/"
-          patch-timetable-by-id: "/{appointmentId}"
-          delete-timetable-by-id: "/{appointmentId}"
-          delete-timetable-doctor-by-id: "/Doctor/{doctorId}"
+          create-doctor-timetable-post: "/"
+          patch-doctor-timetable-by-id: "/{timetableId}"
+          delete-doctor-timetable-by-id: "/{timetableId}"
+          delete-doctor-timetable-by-doctor-id: "/Doctor/{doctorId}"
           delete-timetable-hospital-by-id: "/Hospital/{hospitalId}"
           get-all-timetable-hospital-by-id: "/Hospital/{hospitalId}"
           get-all-timetable-doctor-by-id: "/Doctor/{doctorId}"
