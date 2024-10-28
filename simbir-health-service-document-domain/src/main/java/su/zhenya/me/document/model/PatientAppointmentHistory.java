@@ -10,6 +10,7 @@ import su.zhenya.me.timetable.model.PatientAppointment;
 @AllArgsConstructor
 public class PatientAppointmentHistory {
 
+    private HistoryId historyId;
     private PatientAppointment patientAppointment;
     private String data;
 }

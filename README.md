@@ -3,3 +3,10 @@
 - создание кабинетов (или изменение/удаление) происходит только через метод PUT больницы
 - исходя из здравого смысла: в сервисе расписаний - в методах контроллера с параметрами from,to - оба параметра являются обязательными. это не баг, это так по ТЗ было
 - что-то не понял, зачем при создании расписания держать дату в from,to параметрах. получается, что добавлять расписание врача необходимо каждый новый день, потому что оно содержит дату и ограниченный диапазон в 12 часов
+
+
+линк на сваггер:
+- Сервис аккаунтов: [http://localhost:8085/swagger-ui/index.html](http://localhost:8085/swagger-ui/index.html)
+- Сервис больниц: [http://localhost:8086/swagger-ui/index.html](http://localhost:8086/swagger-ui/index.html)
+- Сервис расписаний: [http://localhost:8087/swagger-ui/index.html](http://localhost:8087/swagger-ui/index.html)
+- Сервис документов: [http://localhost:8088/swagger-ui/index.html](http://localhost:8088/swagger-ui/index.html)

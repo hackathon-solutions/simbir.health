@@ -1,0 +1,30 @@
+server:
+  port: ${DOCUMENT_SERVICE_PORT}
+spring:
+  datasource:
+    username: ${DOCUMENT_POSTGRES_DB_USERNAME:postgres}
+    password: ${DOCUMENT_POSTGRES_DB_PASSWORD:postgres}
+    url: jdbc:postgresql://${DOCUMENT_POSTGRES_DB_HOSTNAME______________:localhost}:${DOCUMENT_POSTGRES_DB_PORT}/${DOCUMENT_POSTGRES_DB_NAME}
+  jpa:
+    hibernate:
+      ddl-auto: none
+  elasticsearch:
+    uris: "http://localhost:9200"
+  main:
+    allow-bean-definition-overriding: true
+service:
+  authentication:
+    authorization-server:
+      server-hostname: "http://localhost:8085/api/"
+      access-token-release-path: "/Authentication/SignIn"
+      access-token-suspend-path: "/Authentication/SignOut"
+      access-token-verify-path: "/Authentication/Validate"
+  rest-api:
+    controllers:
+      history:
+        path: "/api/History"
+        endpoints:
+          get-history-by-account-id: "/Account/{accountId}"
+          get-history-by-id: "/{historyId}"
+          create-patient-appointment-history: "/"
+          update-history-by-id: "/{historyId}"

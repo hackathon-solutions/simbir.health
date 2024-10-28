@@ -28,3 +28,21 @@ services:
       POSTGRES_DB: ${TIMETABLE_POSTGRES_DB_NAME}
     ports:
       - ${TIMETABLE_POSTGRES_DB_PORT}:5432
+  
+  document-postgres-db:
+    image: postgres:15.7
+    hostname: ${DOCUMENT_POSTGRES_DB_HOSTNAME}
+    environment:
+      POSTGRES_USER: ${DOCUMENT_POSTGRES_DB_USERNAME}
+      POSTGRES_PASSWORD: ${DOCUMENT_POSTGRES_DB_PASSWORD}
+      POSTGRES_DB: ${DOCUMENT_POSTGRES_DB_NAME}
+    ports:
+      - ${DOCUMENT_POSTGRES_DB_PORT}:5432
+
+  elasticsearch-db:
+    image: elasticsearch:7.17.25
+    environment:
+      - "discovery.type=single-node"
+    ports:
+      - "9200:9200"
+      - "9300:9300"

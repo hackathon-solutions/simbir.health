@@ -13,4 +13,25 @@
         <version>1.0</version>
     </parent>
 
+    <dependencies>
+        <dependency>
+            <groupId>su.zhenya.me</groupId>
+            <artifactId>simbir-health-service-document-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>su.zhenya.me</groupId>
+            <artifactId>simbir-health-service-account-domain</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>su.zhenya.me</groupId>
+            <artifactId>simbir-health-service-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-elasticsearch</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
