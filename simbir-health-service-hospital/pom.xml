@@ -39,4 +39,18 @@
             <artifactId>flyway-database-postgresql</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>${artifactId}</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>su.zhenya.me.HospitalServiceApplication</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

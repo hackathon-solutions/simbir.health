@@ -4,14 +4,14 @@ spring:
   datasource:
     username: ${HOSPITAL_POSTGRES_DB_USERNAME:postgres}
     password: ${HOSPITAL_POSTGRES_DB_PASSWORD:postgres}
-    url: jdbc:postgresql://localhost:${HOSPITAL_POSTGRES_DB_PORT}/${HOSPITAL_POSTGRES_DB_NAME}
+    url: jdbc:postgresql://${HOSPITAL_POSTGRES_DB_HOSTNAME}:${HOSPITAL_POSTGRES_DB_PORT}/${HOSPITAL_POSTGRES_DB_NAME}
   jpa:
     hibernate:
       ddl-auto: validate
 service:
   authentication:
     authorization-server:
-      server-hostname: "http://localhost:${ACCOUNT_SERVICE_PORT}/api/"
+      server-hostname: "http://${ACCOUNT_SERVICE_HOSTNAME}:${ACCOUNT_SERVICE_PORT}/api/"
       access-token-release-path: "/Authentication/SignIn"
       access-token-suspend-path: "/Authentication/SignOut"
       access-token-verify-path: "/Authentication/Validate"

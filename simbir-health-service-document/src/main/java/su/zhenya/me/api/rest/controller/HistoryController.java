@@ -2,7 +2,6 @@ package su.zhenya.me.api.rest.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import su.zhenya.me.account.model.AccountId;
 import su.zhenya.me.common.security.bean.authority.annotation.OnlyAuthorized;
 import su.zhenya.me.document.model.HistoryId;
 import su.zhenya.me.document.model.PatientAppointmentHistory;

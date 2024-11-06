@@ -4,14 +4,14 @@ spring:
   datasource:
     username: ${TIMETABLE_POSTGRES_DB_USERNAME:postgres}
     password: ${TIMETABLE_POSTGRES_DB_PASSWORD:postgres}
-    url: jdbc:postgresql://localhost:${TIMETABLE_POSTGRES_DB_PORT}/${TIMETABLE_POSTGRES_DB_NAME}
+    url: jdbc:postgresql://${TIMETABLE_POSTGRES_DB_HOSTNAME}:${TIMETABLE_POSTGRES_DB_PORT}/${TIMETABLE_POSTGRES_DB_NAME}
   jpa:
     hibernate:
       ddl-auto: validate
 service:
   authentication:
     authorization-server:
-      server-hostname: "http://localhost:8085/api/"
+      server-hostname: "http://${ACCOUNT_SERVICE_HOSTNAME}:${ACCOUNT_SERVICE_PORT}/api/"
       access-token-release-path: "/Authentication/SignIn"
       access-token-suspend-path: "/Authentication/SignOut"
       access-token-verify-path: "/Authentication/Validate"
@@ -34,4 +34,3 @@ service:
         path: "/api/Appointment"
         endpoints:
           delete-appointment-by-id: "/{appointmentId}"
-          get-my-appointments: "/"

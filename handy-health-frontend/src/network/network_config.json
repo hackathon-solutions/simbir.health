@@ -1,0 +1,23 @@
+{
+  "network": {
+    "account": {
+      "origin": "http://localhost:8085",
+      "methods": {
+        "signin": "/api/Authentication/SignIn",
+        "validateToken": "/api/Authentication/Validate",
+        "refreshToken": "/api/Authentication/Refresh",
+        "accountMe": "/api/Accounts/Me",
+        "doctors": "/api/Doctors/?page=0&size=20"
+      }
+    },
+    "timetable": {
+      "origin": "http://localhost:8087",
+      "methods": {
+        "doctorTimetables": "/api/Timetable/Doctor",
+        "doctorTimetableAppointments": "/api/Timetable/:tid/Appointments",
+        "appointmentCreate": "/api/Timetable/:tid/Appointments",
+        "myAppointments": "/api/Appointment/?page=0&size=20"
+      }
+    }
+  }
+}

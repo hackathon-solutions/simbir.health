@@ -15,9 +15,7 @@ import su.zhenya.me.timetable.model.DoctorTimetable;
 import su.zhenya.me.timetable.model.PatientAppointment;
 import su.zhenya.me.timetable.model.TimetableId;
 
-import java.time.*;
-import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

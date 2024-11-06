@@ -1,0 +1,86 @@
+services:
+  account-postgres-db:
+    image: postgres:15.7
+    hostname: ${ACCOUNT_POSTGRES_DB_HOSTNAME}
+    environment:
+      POSTGRES_USER: ${ACCOUNT_POSTGRES_DB_USERNAME}
+      POSTGRES_PASSWORD: ${ACCOUNT_POSTGRES_DB_PASSWORD}
+      POSTGRES_DB: ${ACCOUNT_POSTGRES_DB_NAME}
+
+  hospital-postgres-db:
+    image: postgres:15.7
+    hostname: ${HOSPITAL_POSTGRES_DB_HOSTNAME}
+    environment:
+      POSTGRES_USER: ${HOSPITAL_POSTGRES_DB_USERNAME}
+      POSTGRES_PASSWORD: ${HOSPITAL_POSTGRES_DB_PASSWORD}
+      POSTGRES_DB: ${HOSPITAL_POSTGRES_DB_NAME}
+
+  timetable-postgres-db:
+    image: postgres:15.7
+    hostname: ${TIMETABLE_POSTGRES_DB_HOSTNAME}
+    environment:
+      POSTGRES_USER: ${TIMETABLE_POSTGRES_DB_USERNAME}
+      POSTGRES_PASSWORD: ${TIMETABLE_POSTGRES_DB_PASSWORD}
+      POSTGRES_DB: ${TIMETABLE_POSTGRES_DB_NAME}
+
+  account-service:
+    image: openjdk:17
+    hostname: ${ACCOUNT_SERVICE_HOSTNAME}
+    ports:
+      - "${ACCOUNT_SERVICE_PORT}:${ACCOUNT_SERVICE_PORT}"
+    working_dir: /app
+    volumes:
+      - ./simbir-health-service-account/target/simbir-health-service-account.jar:/app/app.jar
+    command: "java -jar app.jar --spring.profiles.active=prod"
+    depends_on:
+      - account-postgres-db
+    environment:
+      ACCOUNT_SERVICE_PORT: ${ACCOUNT_SERVICE_PORT}
+      ACCOUNT_SERVICE_SECRET: ${ACCOUNT_SERVICE_SECRET}
+      ACCOUNT_POSTGRES_DB_USERNAME: ${ACCOUNT_POSTGRES_DB_USERNAME}
+      ACCOUNT_POSTGRES_DB_PASSWORD: ${ACCOUNT_POSTGRES_DB_PASSWORD}
+      ACCOUNT_POSTGRES_DB_NAME: ${ACCOUNT_POSTGRES_DB_NAME}
+      ACCOUNT_POSTGRES_DB_HOSTNAME: ${ACCOUNT_POSTGRES_DB_HOSTNAME}
+      ACCOUNT_POSTGRES_DB_PORT: ${ACCOUNT_POSTGRES_DB_PORT}
+
+  hospital-service:
+    image: openjdk:17
+    ports:
+      - "${HOSPITAL_SERVICE_PORT}:${HOSPITAL_SERVICE_PORT}"
+    working_dir: /app
+    volumes:
+      - ./simbir-health-service-hospital/target/simbir-health-service-hospital.jar:/app/app.jar
+    command: "java -jar app.jar --spring.profiles.active=prod"
+    depends_on:
+      - hospital-postgres-db
+      - account-service
+    environment:
+      ACCOUNT_SERVICE_PORT: ${ACCOUNT_SERVICE_PORT}
+      ACCOUNT_SERVICE_HOSTNAME: ${ACCOUNT_SERVICE_HOSTNAME}
+      HOSPITAL_SERVICE_PORT: ${HOSPITAL_SERVICE_PORT}
+      HOSPITAL_POSTGRES_DB_USERNAME: ${HOSPITAL_POSTGRES_DB_USERNAME}
+      HOSPITAL_POSTGRES_DB_PASSWORD: ${HOSPITAL_POSTGRES_DB_PASSWORD}
+      HOSPITAL_POSTGRES_DB_NAME: ${HOSPITAL_POSTGRES_DB_NAME}
+      HOSPITAL_POSTGRES_DB_HOSTNAME: ${HOSPITAL_POSTGRES_DB_HOSTNAME}
+      HOSPITAL_POSTGRES_DB_PORT: ${HOSPITAL_POSTGRES_DB_PORT}
+  
+  timetable-service:
+    image: openjdk:17
+    ports:
+      - "${TIMETABLE_SERVICE_PORT}:${TIMETABLE_SERVICE_PORT}"
+    working_dir: /app
+    volumes:
+      - ./simbir-health-service-timetable/target/simbir-health-service-timetable.jar:/app/app.jar
+    command: "java -jar app.jar --spring.profiles.active=prod"
+    depends_on:
+      - timetable-postgres-db
+      - account-service
+    environment:
+      ACCOUNT_SERVICE_PORT: ${ACCOUNT_SERVICE_PORT}
+      ACCOUNT_SERVICE_HOSTNAME: ${ACCOUNT_SERVICE_HOSTNAME}
+      TIMETABLE_SERVICE_PORT: ${TIMETABLE_SERVICE_PORT}
+      TIMETABLE_POSTGRES_DB_USERNAME: ${TIMETABLE_POSTGRES_DB_USERNAME}
+      TIMETABLE_POSTGRES_DB_PASSWORD: ${TIMETABLE_POSTGRES_DB_PASSWORD}
+      TIMETABLE_POSTGRES_DB_NAME: ${TIMETABLE_POSTGRES_DB_NAME}
+      TIMETABLE_POSTGRES_DB_HOSTNAME: ${TIMETABLE_POSTGRES_DB_HOSTNAME}
+      TIMETABLE_POSTGRES_DB_PORT: ${TIMETABLE_POSTGRES_DB_PORT}

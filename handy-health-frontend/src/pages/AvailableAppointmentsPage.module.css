@@ -1,0 +1,54 @@
+main {
+    display: flex;
+    flex-direction: column;
+    width: 50svw;
+    height: 100svh;
+}
+
+.item {
+    display: flex;
+    width: 100%;
+    padding: 1% 2%;
+}
+
+.item span {
+    width: 30%;
+    font-size: 1.3em;
+}
+
+.item button {
+    width: 40%;
+}
+
+.timetable {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    height: 50svh;
+    width: 50svw;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    box-shadow: 0 0 20px black;
+}
+
+.close {
+    cursor: pointer;
+}
+
+.times {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.time {
+    width: 22%;
+    margin: 10px;
+    padding: 1% 2%;
+    color: white;
+    background: darkgreen;
+    border-radius: 6px;
+    cursor: pointer;
+}

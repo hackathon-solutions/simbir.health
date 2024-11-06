@@ -4,7 +4,7 @@ spring:
   datasource:
     username: ${ACCOUNT_POSTGRES_DB_USERNAME:postgres}
     password: ${ACCOUNT_POSTGRES_DB_PASSWORD:postgres}
-    url: jdbc:postgresql://localhost:${ACCOUNT_POSTGRES_DB_PORT}/${ACCOUNT_POSTGRES_DB_NAME}
+    url: jdbc:postgresql://${ACCOUNT_POSTGRES_DB_HOSTNAME}:${ACCOUNT_POSTGRES_DB_PORT}/${ACCOUNT_POSTGRES_DB_NAME}
   jpa:
     hibernate:
       ddl-auto: validate
@@ -13,7 +13,7 @@ service:
     secret:
       key: ${ACCOUNT_SERVICE_SECRET}
     authorization-server:
-      server-hostname: "http://localhost:8085/api/"
+      server-hostname: "http://localhost:${ACCOUNT_SERVICE_PORT}/api/"
       access-token-release-path: "/Authentication/SignIn"
       access-token-suspend-path: "/Authentication/SignOut"
       access-token-verify-path: "/Authentication/Validate"
