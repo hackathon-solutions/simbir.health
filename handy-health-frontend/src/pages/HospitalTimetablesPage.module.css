@@ -1,0 +1,41 @@
+main {
+    display: flex;
+    flex-direction: column;
+    width: 80svw;
+    height: 100svh;
+}
+
+.title {
+    font-size: 1.7em;
+}
+
+.item {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 1% 2%;
+    border: solid 1px black;
+    cursor: pointer;
+}
+
+.item span {
+    font-size: 1em;
+}
+
+.popup {
+    position: absolute;
+    width: 60svw;
+    height: 60svh;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px black;
+}
+
+.close {
+    cursor: pointer;
+}

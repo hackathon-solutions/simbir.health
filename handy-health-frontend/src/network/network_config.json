@@ -10,13 +10,23 @@
         "doctors": "/api/Doctors/?page=0&size=20"
       }
     },
+    "hospital": {
+      "origin": "http://localhost:8086",
+      "methods": {
+        "hospitalsGet": "/api/Hospitals/?page=0&size=20",
+        "createHospital": "/api/Hospitals/",
+        "hospitalRoomsGet": "/api/Hospitals/:hid/Rooms"
+      }
+    },
     "timetable": {
       "origin": "http://localhost:8087",
       "methods": {
         "doctorTimetables": "/api/Timetable/Doctor",
+        "hospitalTimetables": "/api/Timetable/Hospital",
         "doctorTimetableAppointments": "/api/Timetable/:tid/Appointments",
         "appointmentCreate": "/api/Timetable/:tid/Appointments",
-        "myAppointments": "/api/Appointment/?page=0&size=20"
+        "myAppointments": "/api/Appointment/?page=0&size=20",
+        "createTimetable": "/api/Timetable/"
       }
     }
   }

@@ -11,6 +11,11 @@ export async function signin(username, password) {
     return response.ok ? response.json() : { accessToken: {} };
 }
 
+export function signout() {
+    localStorage.removeItem(LOCAL_STORAGE_AUTH_KEY);
+    localStorage.removeItem(LOCAL_STORAGE_RAUTH_KEY);
+}
+
 export async function authenticate(username, password) {
     const authResponse = await signin(username, password);
     if (authResponse.accessToken.tokenValue && authResponse.refreshToken) {

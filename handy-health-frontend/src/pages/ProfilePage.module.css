@@ -134,6 +134,9 @@ body{
 .social_icons a.yt i{
     color: #ff0000;
 }
+.buttons{
+    flex-wrap: wrap;
+}
 .wrapper .buttons{
     display: flex;
     width: 100%;
@@ -141,10 +144,11 @@ body{
 }
 .buttons button{
     position: relative;
-    width: 100%;
+    width: 45%;
     border: none;
     outline: none;
     padding: 12px 0;
+    margin: 4px;
     color: #31344b;
     font-size: 17px;
     font-weight: 400;

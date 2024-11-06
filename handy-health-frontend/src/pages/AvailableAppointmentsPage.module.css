@@ -41,6 +41,11 @@ main {
 .times {
     display: flex;
     flex-wrap: wrap;
+    overflow-y: scroll;
+}
+
+.times::-webkit-scrollbar {
+    display: none;
 }
 
 .time {

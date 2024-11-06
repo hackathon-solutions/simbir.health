@@ -14,10 +14,7 @@ const AvailableAppointmentsPage = () => {
     useEffect(() => {
         ifAccessAllow(
             () => {
-                getDoctors().then(doctors => {
-                    console.log(doctors);
-                    setDoctors(doctors);
-                });
+                getDoctors().then(doctors => setDoctors(doctors));
             },
             () => {
                 nav("/login");
@@ -28,6 +25,10 @@ const AvailableAppointmentsPage = () => {
     function btnClick(acc) {
         getDoctorTimetables(acc.accountId.id).then(doctorTimetables => {
             setPickedDoctorTimetable(doctorTimetables.content);
+
+            if (!doctorTimetables.content || !doctorTimetables.content[0]) {
+                return;
+            }
 
             getTimetableAppointments(doctorTimetables.content[0].timetableId.id, doctorTimetables.content[0].from, doctorTimetables.content[0].to).then(appointments => setTimetableAppointments(appointments));
         });
@@ -52,7 +53,7 @@ const AvailableAppointmentsPage = () => {
                 </div>
             ) : undefined}
 
-            { pickedDoctorTimetable
+            { pickedDoctorTimetable && pickedDoctorTimetable[0]
                 ? <div className={cs.timetable}>
                     <b className={cs.close} onClick={btnClose}>X</b>
                     <span>Сегодня работает с: {pickedDoctorTimetable[0].from}</span>
