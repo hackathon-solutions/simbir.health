@@ -7,7 +7,9 @@
         "validateToken": "/api/Authentication/Validate",
         "refreshToken": "/api/Authentication/Refresh",
         "accountMe": "/api/Accounts/Me",
-        "doctors": "/api/Doctors/?page=0&size=20"
+        "doctors": "/api/Doctors/?page=0&size=20",
+        "getByRole": "/api/Accounts/:role",
+        "getDoctorAccounts": "/api/Doctors/"
       }
     },
     "hospital": {
@@ -15,7 +17,8 @@
       "methods": {
         "hospitalsGet": "/api/Hospitals/?page=0&size=20",
         "createHospital": "/api/Hospitals/",
-        "hospitalRoomsGet": "/api/Hospitals/:hid/Rooms"
+        "hospitalRoomsGet": "/api/Hospitals/:hid/Rooms",
+        "changeHospital": "/api/Hospitals/:hid"
       }
     },
     "timetable": {

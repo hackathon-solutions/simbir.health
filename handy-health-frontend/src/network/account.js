@@ -84,3 +84,15 @@ export async function getDoctors() {
     const response = await fetch(api, {headers: {Authorization: 'Bearer ' + getAccessToken()}});
     return response.ok ? (await response.json()) : {};
 }
+
+export async function getAccountsByRole(role, page, size) {
+    const api = ACCOUNT_SERVICE_ORIGIN + network.network.account.methods.getByRole.replace(":role", role);
+    const response = await fetch(`${api}?page=${page}&size=${size}`, {headers: {Authorization: 'Bearer ' + getAccessToken()}});
+    return response.ok ? (await response.json()) : {};
+}
+
+export async function getDoctorAccounts(filterFullName, page, size) {
+    const api = ACCOUNT_SERVICE_ORIGIN + network.network.account.methods.getDoctorAccounts;
+    const response = await fetch(`${api}?filterName=${encodeURI(filterFullName)}&page=${page}&size=${size}`, {headers: {Authorization: 'Bearer ' + getAccessToken()}});
+    return response.ok ? (await response.json()) : {};
+}

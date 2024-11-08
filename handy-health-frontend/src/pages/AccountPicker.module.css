@@ -1,0 +1,39 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 70svw;
+    height: 90svh;
+    box-shadow: 0 0 10px black;
+    background: white;
+    padding: 0.3%;
+}
+
+.close {
+    cursor: pointer;
+}
+
+.page_control {
+    margin: 1% 0;
+}
+
+.page_control button {
+    width: 50%;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 1% 0;
+    border: solid 1px black;
+}
+
+.item span {
+    font-size: 1.4em;
+}

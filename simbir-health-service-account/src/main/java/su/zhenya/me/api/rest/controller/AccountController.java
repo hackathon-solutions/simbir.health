@@ -86,4 +86,9 @@ public class AccountController {
     public void accountDeleteById(@PathVariable long accountId) {
         accountService.deleteAccount(new AccountId(accountId));
     }
+
+    @GetMapping("${service.rest-api.controllers.account.endpoints.account-get-by-role}")
+    public Page<AccountResponse> accountGetByRole(@PathVariable Role role, @ParameterObject Pageable pageable) {
+        return accountQueryService.getAccountsFiltered(role, pageable).map(accountResponseMapper::domainToResponse);
+    }
 }

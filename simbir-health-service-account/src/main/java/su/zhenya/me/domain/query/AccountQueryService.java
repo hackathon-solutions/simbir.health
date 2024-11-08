@@ -32,4 +32,9 @@ public class AccountQueryService {
         return accountRepository.findByRolesAndFullName(role.toString(), fullNameFilter, pageable)
                                 .map(accountEntityMapper::entityToDomain);
     }
+
+    public Page<Account> getAccountsFiltered(Role role, Pageable pageable) {
+        return accountRepository.findByRole(role.toString(), pageable)
+                .map(accountEntityMapper::entityToDomain);
+    }
 }

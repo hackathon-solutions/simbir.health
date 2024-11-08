@@ -36,6 +36,7 @@ service:
           account-create: "/"
           account-put-by-id: "/{accountId}"
           account-delete-by-id: "/{accountId}"
+          account-get-by-role: "/{role}"
       doctor:
         path: "/api/Doctors"
         endpoints:

@@ -5,7 +5,7 @@ CREATE TABLE doctor_timetables (
     room VARCHAR(500) NOT NULL,
     from_at TIMESTAMP NOT NULL,
     to_at TIMESTAMP NOT NULL,
-    UNIQUE (doctor_id, hospital_id)
+    UNIQUE (doctor_id, hospital_id, from_at, to_at)
 );
 
 CREATE TABLE patient_appointments (

@@ -20,3 +20,9 @@ export async function getHospitalRooms(hospitalId) {
     const response = await fetch(api, {headers: {Authorization: 'Bearer ' + getAccessToken()}});
     return response.ok ? (await response.json()) : {};
 }
+
+export async function changeHospital(hospitalId, hospital) {
+    const api = HOSPITAL_SERVICE_ORIGIN + network.network.hospital.methods.changeHospital.replace(":hid", hospitalId);
+    const response = await fetch(api, {method: "PUT", headers: {Authorization: 'Bearer ' + getAccessToken(), "Content-Type": "application/json"}, body: JSON.stringify(hospital)});
+    return response.ok ? (await response.json()) : {};
+}

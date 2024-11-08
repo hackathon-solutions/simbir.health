@@ -15,4 +15,7 @@ public interface AccountRepository extends JpaRepository<AccountEntity, AccountI
 
     @Query(value = "select * from accounts as acc where acc.account_roles like concat('%', :role, '%') and concat(acc.first_name, ' ', acc.last_name) like concat('%', :fullName, '%')", nativeQuery = true)
     Page<AccountEntity> findByRolesAndFullName(String role, String fullName, Pageable pageable);
+
+    @Query(value = "select * from accounts as acc where acc.account_roles like concat('%', :role, '%')", nativeQuery = true)
+    Page<AccountEntity> findByRole(String role, Pageable pageable);
 }

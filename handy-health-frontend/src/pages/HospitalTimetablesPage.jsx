@@ -4,6 +4,7 @@ import {ifAccessAllow} from "../network/account";
 import cs from "./HospitalTimetablesPage.module.css";
 import {createTimetable, getHospitalTimetables} from "../network/timetable";
 import {getHospitalRooms} from "../network/hospital";
+import AccountPicker from "./AccountPicker";
 
 const HospitalTimetablesPage = () => {
 
@@ -11,7 +12,6 @@ const HospitalTimetablesPage = () => {
     const { id } = useParams();
 
     const [timetables, setTimetables] = useState(undefined);
-    const [doctors, setDoctors] = useState(undefined);
     const [rooms, setRooms] = useState(undefined);
 
     const [hospital, setHospital] = useState("");
@@ -21,6 +21,7 @@ const HospitalTimetablesPage = () => {
     const [to, setTo] = useState("");
 
     const [createPopupAddShow, setCreatePopupAddShow] = useState(false);
+    const [accountPickerPopupShow, setAccountPickerPopupShow] = useState(false);
 
     useEffect(() => {
         ifAccessAllow(
@@ -42,6 +43,10 @@ const HospitalTimetablesPage = () => {
         ).then();
     }, []);
 
+    useEffect(() => {
+        console.log(doctor);
+    }, [doctor]);
+
     function saveTimetable() {
         createTimetable(id, doctor, room, from, to).then();
         setHospital("");
@@ -50,6 +55,7 @@ const HospitalTimetablesPage = () => {
         setFrom("");
         setTo("");
         setCreatePopupAddShow(false);
+        setAccountPickerPopupShow(false);
     }
 
     return (
@@ -69,21 +75,14 @@ const HospitalTimetablesPage = () => {
             { createPopupAddShow
                 ? <div className={cs.popup}>
                     <b className={cs.close} onClick={() => setCreatePopupAddShow(false)}>X</b>
-                    {/*<div>*/}
-                    {/*    <span>Доктор: </span>*/}
-                    {/*    <select value={doctor} onChange={(e) => setDoctor(e.target.value)}>*/}
-                    {/*        <option>0</option>*/}
-                    {/*        { doctors*/}
-                    {/*            ? doctors.map(doctor => <option>{doctor}</option>)*/}
-                    {/*            : undefined*/}
-                    {/*        }*/}
-                    {/*    </select>*/}
-                    {/*</div>*/}
-                    <input placeholder="acc id" value={doctor} onChange={(e) => setDoctor(e.target.value)}/>
+                    <div>
+                        <span>Доктор: {doctor}&nbsp;</span>
+                        <button onClick={(e) => {setAccountPickerPopupShow(true); e.target.blur()}}>выбрать</button>
+                    </div>
                     <div>
                         <span>Кабинет: </span>
                         <select value={room} onChange={(e) => setRoom(e.target.value)}>
-                            <option>0</option>
+                            <option></option>
                             {rooms
                                 ? rooms.map(room => <option>{room}</option>)
                                 : undefined
@@ -96,6 +95,13 @@ const HospitalTimetablesPage = () => {
                            onChange={(e) => setTo(e.target.value)}/>
                     <button onClick={saveTimetable}>сохранить</button>
                 </div>
+                : undefined
+            }
+
+            { accountPickerPopupShow
+                ? <AccountPicker onPreparePickedItem={acc => acc.accountId.id}
+                                 setStatePickedItem={setDoctor} searchRole="DOCTOR"
+                                 onDismiss={() => setAccountPickerPopupShow(false)} />
                 : undefined
             }
         </main>
