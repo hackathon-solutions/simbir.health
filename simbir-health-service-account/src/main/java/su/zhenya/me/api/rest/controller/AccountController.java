@@ -77,7 +77,7 @@ public class AccountController {
     public AccountResponse accountPatchById(@PathVariable long accountId, @RequestBody AccountUpdateRequest request) {
         Account account = accountRequestMapper.requestToDomain(request);
         account.setAccountId(new AccountId(accountId));
-        return accountResponseMapper.domainToResponse(accountService.saveAccount(account));
+        return accountResponseMapper.domainToResponse(accountService.editAccount(account));
     }
 
     // TODO: реализовать "мягкое" удаление

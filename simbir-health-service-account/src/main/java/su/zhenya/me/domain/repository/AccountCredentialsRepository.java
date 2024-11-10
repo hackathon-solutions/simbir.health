@@ -10,4 +10,5 @@ public interface AccountCredentialsRepository extends JpaRepository<AccountCrede
 
     AccountCredentialsEntity findByUsernameAndPassword(String username, String password);
     boolean existsByUsername(String username);
+    AccountCredentialsEntity findByUsername(String username);
 }

@@ -14,7 +14,6 @@ const HospitalTimetablesPage = () => {
     const [timetables, setTimetables] = useState(undefined);
     const [rooms, setRooms] = useState(undefined);
 
-    const [hospital, setHospital] = useState("");
     const [doctor, setDoctor] = useState("");
     const [room, setRoom] = useState("");
     const [from, setFrom] = useState("");
@@ -49,7 +48,6 @@ const HospitalTimetablesPage = () => {
 
     function saveTimetable() {
         createTimetable(id, doctor, room, from, to).then();
-        setHospital("");
         setDoctor("");
         setRoom("");
         setFrom("");

@@ -5,6 +5,12 @@ const ACCOUNT_SERVICE_ORIGIN = network.network.account.origin;
 const LOCAL_STORAGE_AUTH_KEY = "auth";
 const LOCAL_STORAGE_RAUTH_KEY = "rauth";
 
+export async function signup(firstName, lastName, username, password) {
+    const api = ACCOUNT_SERVICE_ORIGIN + network.network.account.methods.signup;
+    const response = await fetch(api, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({ firstName, lastName, credentials: {username, password}})});
+    return response.ok ? response.json() : {};
+}
+
 export async function signin(username, password) {
     const api = ACCOUNT_SERVICE_ORIGIN + network.network.account.methods.signin;
     const response = await fetch(api, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({ credentials: {username, password}})});
@@ -94,5 +100,17 @@ export async function getAccountsByRole(role, page, size) {
 export async function getDoctorAccounts(filterFullName, page, size) {
     const api = ACCOUNT_SERVICE_ORIGIN + network.network.account.methods.getDoctorAccounts;
     const response = await fetch(`${api}?filterName=${encodeURI(filterFullName)}&page=${page}&size=${size}`, {headers: {Authorization: 'Bearer ' + getAccessToken()}});
+    return response.ok ? (await response.json()) : {};
+}
+
+export async function getAccounts(page, size) {
+    const api = ACCOUNT_SERVICE_ORIGIN + network.network.account.methods.getAccounts;
+    const response = await fetch(`${api}?page=${page}&size=${size}`, {headers: {Authorization: 'Bearer ' + getAccessToken()}});
+    return response.ok ? (await response.json()) : {};
+}
+
+export async function setAccount(accountId, account) {
+    const api = ACCOUNT_SERVICE_ORIGIN + network.network.account.methods.setAccount.replace(":aid", accountId);
+    const response = await fetch(api, {method: "PUT", headers: {Authorization: 'Bearer ' + getAccessToken(), "Content-Type": "application/json"}, body: JSON.stringify(account)});
     return response.ok ? (await response.json()) : {};
 }

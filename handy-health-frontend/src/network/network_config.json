@@ -3,13 +3,16 @@
     "account": {
       "origin": "http://localhost:8085",
       "methods": {
+        "signup": "/api/Authentication/SignUp",
         "signin": "/api/Authentication/SignIn",
         "validateToken": "/api/Authentication/Validate",
         "refreshToken": "/api/Authentication/Refresh",
         "accountMe": "/api/Accounts/Me",
         "doctors": "/api/Doctors/?page=0&size=20",
         "getByRole": "/api/Accounts/:role",
-        "getDoctorAccounts": "/api/Doctors/"
+        "getDoctorAccounts": "/api/Doctors/",
+        "getAccounts": "/api/Accounts/",
+        "setAccount": "/api/Accounts/:aid"
       }
     },
     "hospital": {

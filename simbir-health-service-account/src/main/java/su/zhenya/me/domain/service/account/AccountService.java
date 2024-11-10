@@ -41,6 +41,13 @@ public class AccountService {
     }
 
     @Transactional
+    public Account editAccount(Account account) {
+        AccountCredentialsEntity credentialsEntity = accountCredentialsRepository.findByUsername(account.getCredentials().getUsername());
+        account.getCredentials().setPassword(credentialsEntity.getPassword());
+        return saveAccount(account);
+    }
+
+    @Transactional
     public void deleteAccount(AccountId accountId) {
         // TODO: не удаляет
         accountRepository.deleteById(accountId);

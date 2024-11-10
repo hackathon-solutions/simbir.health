@@ -32,7 +32,7 @@ const ProfilePage = () => {
             <div className={cs.icon + ' ' + cs.arrow}><i className="fas fa-arrow-left"></i></div>
             <div className={cs.icon + ' ' + cs.dots}><i className="fas fa-ellipsis-v"></i></div>
             <div className={cs.name}>{user.firstName} {user.lastName}</div>
-            <div className={cs.about}>{user.accountRoles}</div>
+            <div onClick={() => nav("/accounts")} className={cs.about}>{user.accountRoles}</div>
             <div className={cs.social_icons}>
                 <a href="#" className={cs.fb}><i className="fab fa-facebook-f"></i></a>
                 <a href="#" className={cs.twitter}><i className="fab fa-twitter"></i></a>
