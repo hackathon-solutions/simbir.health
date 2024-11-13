@@ -156,6 +156,9 @@ body{
     cursor: pointer;
     z-index: 4;
 }
+.buttons button:last-child{
+    width: 100%;
+}
 .buttons button:first-child{
     margin-right: 10px;
 }

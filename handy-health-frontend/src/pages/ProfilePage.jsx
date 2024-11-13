@@ -43,6 +43,7 @@ const ProfilePage = () => {
                 <button onClick={() => nav("/appointments/available")}>Записаться</button>
                 <button onClick={() => nav("/my/appointments")}>Записи</button>
                 <button onClick={() => nav("/hospitals")}>Поликлиники</button>
+                <button onClick={() => nav("/reports")}>Отчеты</button>
                 <button onClick={() => nav("/logout")}>Выйти</button>
             </div>
             <div className={cs.social_share}>

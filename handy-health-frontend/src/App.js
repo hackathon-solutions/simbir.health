@@ -9,6 +9,7 @@ import HospitalTimetablesPage from "./pages/HospitalTimetablesPage";
 import LogoutPage from "./pages/LogoutPage";
 import LoginRegPage from "./pages/LoginRegPage";
 import AccountsPage from "./pages/AccountsPage";
+import ReportsPage from "./pages/ReportsPage";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/my/appointments" element={<AuthorityProxy loginPath="/login" componentIfAuth={<AppointmentsPage />} />} />
                 <Route path="/hospitals" element={<AuthorityProxy loginPath="/login" componentIfAuth={<HospitalsPage />} />} />
                 <Route path="/timetables/hospitals/:id" element={<AuthorityProxy loginPath="/login" componentIfAuth={<HospitalTimetablesPage />} />} />
+                <Route path="/reports" element={<AuthorityProxy loginPath="/login" componentIfAuth={<ReportsPage />} />} />
                 <Route path="/logout" element={<AuthorityProxy loginPath="/login" componentIfAuth={<LogoutPage />} />} />
             </Routes>
         </BrowserRouter>
